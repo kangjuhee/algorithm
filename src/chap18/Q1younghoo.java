@@ -16,12 +16,12 @@ public class Q1younghoo {
 			
 			int numOfPpl = sc.nextInt();
 			int skip = sc.nextInt();
-			// 병사 list 초기화
+			// 병사 리스트 초기화
 			List<Integer> list = new ArrayList<Integer>();
 			for (int i = 0; i < numOfPpl; i++) {
 				list.add(i+1);
 			}
-			// 실제 알고리즘 구현부분
+
 			int idx = 0;
 			
 			while (list.size() > 2) {
@@ -29,12 +29,12 @@ public class Q1younghoo {
 				idx = (idx + skip - 1) % list.size();
 			}
 			
-			// 결과값 출력
 			Iterator<Integer> iterator = list.iterator();
 			while (iterator.hasNext()) {
 				System.out.println(iterator.next());
 			}
 		}
 		sc.close();
+
 	}
 }
