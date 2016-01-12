@@ -25,9 +25,8 @@ public class Q1younghoo {
 			int idx = 0;
 			
 			while (list.size() > 2) {
-				int size = list.size(); // size backup
 				list.remove(idx); // idx에 해당하는 병사 제거
-				idx = (idx + skip - 1) % (size - 1);
+				idx = (idx + skip - 1) % list.size();
 			}
 			
 			// 결과값 출력
