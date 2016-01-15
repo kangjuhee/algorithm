@@ -10,7 +10,6 @@ public class Q1younghoo {
 
     public static boolean checkBrackets(String input) {
         int len = input.length();
-        System.out.println("str length : " + len);
         
         Stack<Integer> stack = new Stack<Integer>();
         
@@ -23,6 +22,10 @@ public class Q1younghoo {
             if (open.indexOf(c) != -1) { // (, {, [ 중 하나에 해당하는 수식인 경우에는 스택에 집어넣는다.
                 stack.push(c);
             } else { // ), }, ] 중 하나에 해당하는 수식인 경우에는 가장 최근에 스택에 저장된 수식과 비교한다. 
+                
+                if (stack.isEmpty()) {
+                    return false;
+                }
                 
                 if (open.indexOf(stack.peek()) == close.indexOf(c)) {
                     // 제대로 닫히는 문자열이라면 현재 스택에 있는 문자를 꺼내고, 다음 문자 검사로 넘어간다.
@@ -50,6 +53,5 @@ public class Q1younghoo {
 			    System.out.println("NO");
 			}
 		}
-		sc.close();
 	}
 }
