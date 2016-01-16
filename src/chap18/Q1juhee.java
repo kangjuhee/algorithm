@@ -12,10 +12,10 @@ public class Q1juhee {
 		int totalPlay, numPpl, kill;
 		
 		totalPlay = sc.nextInt();
-		// numPpl(N=6)°¹¼ö¸¦ ¹Þ°í KILL(K=3)¹øÂ° ¾ÆÀÌ¸¦ Á×ÀÎ´Ù.
+		// numPpl(N=6)ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ°ï¿½ KILL(K=3)ï¿½ï¿½Â° ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½Î´ï¿½.
 		while(totalPlay > 1) {
-			numPpl = sc.nextInt(); // »ç¶÷¼ö ÀÔ·Â
-			kill = sc.nextInt(); //¸î¹øÂ° 
+			numPpl = sc.nextInt(); // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½
+			kill = sc.nextInt(); //ï¿½ï¿½ï¿½Â° 
 //			System.out.println(totalPlay +" " + numPpl + " " + kill);
 			
 			List<Integer> solider = new ArrayList<Integer>(); 
@@ -23,15 +23,15 @@ public class Q1juhee {
 				solider.add(i + 1);
 			}
 			
-			int index = 0; //Á×ÀÏ ÀÎµ¦½º
+			int index = 0; //ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½
 			int size = solider.size();
 			while (size > 2) {
 				solider.remove(index);
 //				System.out.println("size : " + solider.size());
 				
-				index += (kill- 1); //´ÙÀ½ ¹ø Á×ÀÏ ÀÎµ¦½º ¼±Á¤
+				index += (kill- 1); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 				size = solider.size();
-				if(index >=  size) // index°¡ ÇöÀç array sizeº¸´Ù Å©¸é
+				if(index >=  size) // indexï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ array sizeï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½
 					index = index  % size;
 			} //while
 
@@ -40,5 +40,6 @@ public class Q1juhee {
 				System.out.println(solider.get(i));
 			}
 		}
+		sc.close();
 	}
 }
