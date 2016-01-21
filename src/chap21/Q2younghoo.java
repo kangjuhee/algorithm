@@ -76,42 +76,27 @@ public class Q2younghoo {
 
         List<Integer> list = new ArrayList<>();
 
-        getHeight(rootNode);
-
-//        for (int i = 0; i < rootNode.getChildren().size(); i++) {
-//            // list.add(getHeight(rootNode.getChildren().get(i)));
-//            getHeight(rootNode.getChildren().get(i));
-//        }
-
+        for (int i = 0; i < rootNode.getChildren().size(); i++) {
+            list.add(getHeight(rootNode.getChildren().get(i)));
+        }
         list.stream().forEach((i) -> System.out.println(i));
         return 1;
     }
 
-//    public static int getHeight(TreeNode treeNode) {
-//
-//        int depth = 0;
-//
-//        if (treeNode.hasChild()) {
-//            for (int i = 0; i < treeNode.getChildren().size(); i++) {
-//                depth += getHeight(treeNode.getChildren().get(i));
-//            }
-//            return depth + 1;
-//        } else {
-//            return depth;
-//        }
-//    }
-    public static void getHeight(TreeNode treeNode) {
+    public static int getHeight(TreeNode treeNode) {
 
         if (treeNode.hasChild()) {
+            int maxDepth = 0;
             System.out.println("TREE NODE INFO : " + treeNode);
             for (int i = 0; i < treeNode.getChildren().size(); i++) {
-                getHeight(treeNode.getChildren().get(i));
+                maxDepth = Math.max(maxDepth, getHeight(treeNode.getChildren().get(i)));
             }
+            return maxDepth + 1;
         } else {
             System.out.print("TREE NODE INFO : " + treeNode + " ");
             System.out.println("THIS IS LEAF NODE");
+            return 0;
         }
-
     }
 
     public static void main(String[] args) throws FileNotFoundException {
