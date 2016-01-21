@@ -14,7 +14,6 @@ public class Q1younghoo {
      * @return
      */
     public static int[] slice(int[] arr, int first, int last) {
-
         return Arrays.copyOfRange(arr, first, last + 1);
     }
 
@@ -37,7 +36,7 @@ public class Q1younghoo {
         int rootIndexInInOrder = find(inOrder, parent);
 
         if (inOrder.length == 1) {
-            System.out.println(inOrder[0]);
+            System.out.print(inOrder[0] + " ");
             return;
         } else if (inOrder.length == 0) {
             return;
@@ -53,7 +52,7 @@ public class Q1younghoo {
 
         traversal(preOrder, leftInOrder);
         traversal(preOrder, rightInOrder);
-        System.out.println(parent);
+        System.out.print(parent + " ");
 
     }
 
@@ -61,26 +60,21 @@ public class Q1younghoo {
 
         Scanner sc = new Scanner(System.in);
         // Scanner sc = new Scanner(new FileInputStream("./input.txt"));
-        System.out.println("전체 테스트 케이스 개수를 입력해주세요 : ");
-        int numofCase = sc.nextInt();
+        int numOfCase = sc.nextInt();
 
         /**
          * preOrder, inOrder list를 초기에 arrayList로 하려고 하였으나
          * slice를 간단히 구현해보기 위해 그냥 array로 선언하였다.
          */
-        for (int i = 0; i < numofCase; i++) {
-            System.out.println("트리의 전체 노드 개수를 입력해주세요 : ");
+        for (int i = 0; i < numOfCase; i++) {
             int numOfNode = sc.nextInt(); // 트리의 전체 노드 개수
-            System.out.println("트리의 전체 노드 개수 : " + numOfNode);
             int[] preOrder = new int[numOfNode];
             int[] inOrder = new int[numOfNode];
 
-            System.out.println("전위순회 순서를 입력해주세요 : ");
             for (int j = 0; j < numOfNode; j++) {
                 preOrder[j] = sc.nextInt();
             }
 
-            System.out.println("중위순회 순서를 입력해주세요 : ");
             for (int j = 0; j < numOfNode; j++) {
                 inOrder[j] = sc.nextInt();
             }
