@@ -1,119 +1,158 @@
 package chap21;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
 public class Q2younghoo {
 
-    public static void find(List<Fortress> fortressList) {
-        TreeNode rootNode = new TreeNode(fortressList.get(0));
-        fortressList.remove(0);
-        System.out.println("\n##### MAKE TREE #####\n");
-        for (int i = 0; i < fortressList.size(); i++) {
-            TreeNode treeNode = new TreeNode(fortressList.get(i));
-            makeTree(rootNode, treeNode);
-        }
-        System.out.println("\n##### TRAVERSAL TREE #####\n");
-        // find longest path
-        findLongestPath(rootNode);
+    // Fortress list를 radius 순으로 정렬
+    public static void sortFortress(List<Fortress> list) {
+        list.sort(((o1, o2) -> o2.radius - o1.radius));
+    }
+    public static void sortInteger(List<Integer> list) { 
+        list.sort(((a, b) -> b - a)); 
     }
 
-    public static void makeTree(TreeNode rootNode, TreeNode treeNode) {
-        if (rootNode.hasChild()) {
-            Boolean sameBoundary = false;
+    public static void findPath(List<Fortress> fortressList) {
 
-            for (int i = 0; i < rootNode.getChildren().size(); i++) {
+        Fortress root = fortressList.get(0);
 
-                switch (rootNode.getChildren().get(i).getFortress().getFortressPosition(treeNode.getFortress())) {
-                    case Fortress.INNER_FORTRESS:
-                        System.out.println("INNER FORTRESS");
-                        sameBoundary = true;
-                        treeNode.setParent(rootNode.getChildren().get(i).getParent());
-                        treeNode.addChild(rootNode.getChildren().get(i));
-                        rootNode.getChildren().get(i).setParent(treeNode);
-                        break;
-                    case Fortress.OUTER_FORTRESS:
-                        System.out.println("OUTER FORTRESS");
-                        sameBoundary = true;
-                        makeTree(rootNode.getChildren().get(i), treeNode);
-                        break;
-                    case Fortress.NOT_IN_FORTRESS:
-                        System.out.println("NOT IN FORTRESS");
-                        sameBoundary = false;
-                        break;
-                }
-            }
-
-            if (!sameBoundary) {
-                System.out.println(treeNode + " NODE HAS ADDED TO " + rootNode);
-                rootNode.addChild(treeNode);
-                treeNode.setParent(rootNode);
-            }
-
-        } else {
-            System.out.println(treeNode + " NODE HAS ADDED TO " + rootNode);
-            rootNode.addChild(treeNode);
-            treeNode.setParent(rootNode);
+        for (int i = 1 ; i < fortressList.size(); i++) {
+            root.addChild(fortressList.get(i));
         }
-    }
-
-    /**
-     * Fortress 간에 가장 거리가 먼 경로를 찾는 메소드이다.
-     * 가장 먼 경로는 다음과 같이 두 가지 경우이다.
-     *
-     * From 루트노드 To 리프노드
-     * 1. 루트 노드로부터 하나의 서브트리만을 가진 경우에는 루트 노드에서 마지막 리프노드까지의
-     * 거리가 가장 긴 루트이다.
-     *
-     * From 리프노드 To 리프노드
-     * 2. 루트 노드에 여러개의 서브트리가 있는 경우 루트 노드로부터 각 마지막 리프노드들의
-     * 거리 중 가장 긴 2개의 경로의 합이 거리가 가장 긴 루트이다.
-     *
-     * @param rootNode
-     */
-    public static int findLongestPath(TreeNode rootNode) {
 
         List<Integer> list = new ArrayList<>();
 
-        for (int i = 0; i < rootNode.getChildren().size(); i++) {
-            list.add(getHeight(rootNode.getChildren().get(i)));
+        if (root.children.size() == 1) { // root의 child 갯수가 1개인 경우
+            int count = 0;
+
+            Fortress tmpRoot = root;
+
+            while (tmpRoot.children.size() == 1) {
+                tmpRoot = tmpRoot.children.get(0);
+                count++;
+            }
+
+            if (tmpRoot.children.size() == 0) {
+                for (int i = 0; i < root.children.size(); i++) {
+                    list.add(getLevel(root.children.get(i)));
+                }
+                System.out.println((list.get(0) + 1));
+            } else {
+                for (int i = 0; i < tmpRoot.children.size(); i++) {
+                    list.add(getLevel(tmpRoot.children.get(i)));
+                }
+                if (list.get(0) + count + 1 > list.get(0) + list.get(1) + 2) {
+                    System.out.println((list.get(0) + count + 1));
+                } else {
+                    System.out.println(list.get(0) + list.get(1) + 2);
+                }
+            }
+        } else { // root의 child 갯수가 2개 이상인 경우
+
+            for (int i = 0; i < root.children.size(); i++) {
+                list.add(getLevel(root.children.get(i)));
+            }
+
+            sortInteger(list);
+            
+            if (list.get(0) > list.get(0) + list.get(1) + 2) {
+                System.out.println(list.get(0));
+            } else {
+                System.out.println((list.get(0) + list.get(1) + 2));
+            }
         }
-        list.stream().forEach((i) -> System.out.println(i));
-        return 1;
     }
 
-    public static int getHeight(TreeNode treeNode) {
+    public static int getLevel(Fortress fortress) {
 
-        if (treeNode.hasChild()) {
-            int maxDepth = 0;
-            System.out.println("TREE NODE INFO : " + treeNode);
-            for (int i = 0; i < treeNode.getChildren().size(); i++) {
-                maxDepth = Math.max(maxDepth, getHeight(treeNode.getChildren().get(i)));
+        if (fortress.hasChild()) {
+            int level = 0;
+            for (int i = 0; i < fortress.children.size(); i++) {
+                level = Math.max(level, getLevel(fortress.children.get(i)));
             }
-            return maxDepth + 1;
+            return level + 1;
         } else {
-            System.out.print("TREE NODE INFO : " + treeNode + " ");
-            System.out.println("THIS IS LEAF NODE");
             return 0;
         }
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
-
-        Scanner sc = new Scanner(new FileInputStream("./Q2_input.txt"));
-        // Scanner sc = new Scanner(System.in);
-        int testCase = sc.nextInt();
-
-        for (int i = 0; i < testCase; i++) {
-
-            int numCastles = sc.nextInt(); // 성벽의 총 갯수
+    public static void main(String[] args) throws IOException {
+        
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        
+        int testCase = Integer.parseInt(br.readLine().trim());
+        
+        for (int t = 0; t < testCase; t++) {
+            
+            int numFortress = Integer.parseInt(br.readLine().trim());
             List<Fortress> fortressList = new ArrayList<>();
-            for (int j = 0; j < numCastles; j++) {
-                fortressList.add(new Fortress(sc.nextInt(), sc.nextInt(), sc.nextInt()));
+            System.out.println(numFortress);
+            for (int i = 0; i < numFortress; i++) {
+                StringTokenizer st = new StringTokenizer(br.readLine());
+                fortressList.add(new Fortress(Integer.parseInt(st.nextToken()), 
+                    Integer.parseInt(st.nextToken()), 
+                    Integer.parseInt(st.nextToken())));
             }
-            find(fortressList);
-            System.out.println("TEST " + (i + 1) + " 종료");
+            sortFortress(fortressList);
+            findPath(fortressList); // 알고리즘
         }
-    }   
+    }
+}
+
+class Fortress {
+
+    int xPos;
+    int yPos;
+    int radius;
+    List<Fortress> children = new ArrayList<>();
+
+    public Fortress(int xPos, int yPos, int radius) {
+        this.xPos = xPos;
+        this.yPos = yPos;
+        this.radius = radius;
+    }
+
+    public boolean isChild(Fortress fortress) {
+        int distance = (int)Math.sqrt(Math.pow(this.xPos-fortress.xPos, 2) + Math.pow(this.yPos-fortress.yPos, 2));
+        return distance < this.radius;
+    }
+
+    // 아래와 같은 방식으로 child를 추가하고, 무작위로 데이터를 입력하는 경우 문제가 발생한다.
+    // ex) (5, 5, 15), (5, 5, 5), (5, 5, 10)라는 데이터를 입력하는 경우
+    //              (5, 5, 15)
+    //                  |
+    //              (5, 5, 10) ( (5, 5, 15)의 child)
+    //                  |
+    //              (5, 5, 5) ( (5, 5, 10)의 child)
+    // 이와 같은 구조를 가져야 하지만, 아래와 같은 방식을 사용한다면
+    //              (5, 5, 15)
+    //                  |
+    //              (5, 5, 10) ( (5, 5, 15)의 child)
+    //                  |
+    //              (5, 5, 5) ((5, 5, 15)의 child)
+    // 과 같이 child가 꼬여버리게 된다.
+    //
+    // 이 문제를 해결하기 위해서는 초기 데이터 입력 시 모든 데이터를 반지름 기준으로 내림차순 정렬하고 입력해야한다.
+    // 많은 데이터가 입력으로 들어오는 경우 정렬 또한 부담이지만 일단은 이 방식대로 구현해보려 한다.
+    public void addChild(Fortress fortress) {
+
+        for (int i = 0; i < children.size(); i++) {
+            // 다음 child fortress 중 매개변수로 들어온 fortress를 child로 가질 수 있는 fortress로 자식 추가 임무를 넘김!
+            if (children.get(i).isChild(fortress)) {
+                children.get(i).addChild(fortress);
+                return;
+            }
+        }
+
+        children.add(fortress);
+    }
+
+    public boolean hasChild() {
+        return !children.isEmpty();
+    }
 }
