@@ -1,11 +1,10 @@
 package chap21;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
+import java.util.Scanner;
 
 public class Q2younghoo {
 
@@ -13,13 +12,12 @@ public class Q2younghoo {
     public static void sortFortress(List<Fortress> list) {
         list.sort(((o1, o2) -> o2.radius - o1.radius));
     }
-    public static void sortInteger(List<Integer> list) { 
-        list.sort(((a, b) -> b - a)); 
-    }
+    public static void sortInteger(List<Integer> list) { list.sort(((a, b) -> b - a)); }
 
     public static void findPath(List<Fortress> fortressList) {
 
         Fortress root = fortressList.get(0);
+        // fortressList.remove(0);
 
         for (int i = 1 ; i < fortressList.size(); i++) {
             root.addChild(fortressList.get(i));
@@ -27,44 +25,16 @@ public class Q2younghoo {
 
         List<Integer> list = new ArrayList<>();
 
-        if (root.children.size() == 1) { // root의 child 갯수가 1개인 경우
-            int count = 0;
+        for (int i = 0; i < root.children.size(); i++) {
+            list.add(getLevel(root.children.get(i)));
+        }
 
-            Fortress tmpRoot = root;
+        sortInteger(list);
 
-            while (tmpRoot.children.size() == 1) {
-                tmpRoot = tmpRoot.children.get(0);
-                count++;
-            }
-
-            if (tmpRoot.children.size() == 0) {
-                for (int i = 0; i < root.children.size(); i++) {
-                    list.add(getLevel(root.children.get(i)));
-                }
-                System.out.println((list.get(0) + 1));
-            } else {
-                for (int i = 0; i < tmpRoot.children.size(); i++) {
-                    list.add(getLevel(tmpRoot.children.get(i)));
-                }
-                if (list.get(0) + count + 1 > list.get(0) + list.get(1) + 2) {
-                    System.out.println((list.get(0) + count + 1));
-                } else {
-                    System.out.println(list.get(0) + list.get(1) + 2);
-                }
-            }
-        } else { // root의 child 갯수가 2개 이상인 경우
-
-            for (int i = 0; i < root.children.size(); i++) {
-                list.add(getLevel(root.children.get(i)));
-            }
-
-            sortInteger(list);
-            
-            if (list.get(0) > list.get(0) + list.get(1) + 2) {
-                System.out.println(list.get(0));
-            } else {
-                System.out.println((list.get(0) + list.get(1) + 2));
-            }
+        if (list.size() == 1) {
+            System.out.println((list.get(0) + 1));
+        } else {
+            System.out.println((list.get(0) + list.get(1) + 2));
         }
     }
 
@@ -81,28 +51,25 @@ public class Q2younghoo {
         }
     }
 
-    public static void main(String[] args) throws IOException {
-        
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        
-        int testCase = Integer.parseInt(br.readLine().trim());
-        
+    public static void main(String[] args) throws FileNotFoundException {
+
+        Scanner sc = new Scanner(System.in);
+ 
+        int testCase = sc.nextInt();
+
         for (int t = 0; t < testCase; t++) {
-            
-            int numFortress = Integer.parseInt(br.readLine().trim());
+
+            int numFortress = sc.nextInt();
             List<Fortress> fortressList = new ArrayList<>();
-            System.out.println(numFortress);
             for (int i = 0; i < numFortress; i++) {
-                StringTokenizer st = new StringTokenizer(br.readLine());
-                fortressList.add(new Fortress(Integer.parseInt(st.nextToken()), 
-                    Integer.parseInt(st.nextToken()), 
-                    Integer.parseInt(st.nextToken())));
+                fortressList.add(new Fortress(sc.nextInt(), sc.nextInt(), sc.nextInt()));
             }
             sortFortress(fortressList);
             findPath(fortressList); // 알고리즘
         }
     }
 }
+
 
 class Fortress {
 
