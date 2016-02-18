@@ -1,4 +1,4 @@
-package chap23.juhee;
+package chap23.juhee.p1;
 
 /**
  * Created by Juhee on 2/17/16.

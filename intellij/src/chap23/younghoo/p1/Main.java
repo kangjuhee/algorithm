@@ -1,4 +1,4 @@
-package chap23.younghoo;
+package chap23.younghoo.p1;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package chap23.juhee;
+package chap23.juhee.p1;
 
 import java.io.BufferedReader;
 import java.io.IOException;
