@@ -12,6 +12,12 @@ public class Main {
         {0, 1, -1, -1}
     };
 
+    static boolean[] visited = new boolean[4];
+
+    static {
+        Arrays.fill(visited, false);
+    }
+
     public static String printNodeName(int node) {
 
         String rt = null;
@@ -33,7 +39,7 @@ public class Main {
         return rt;
     }
 
-    public static void dfs(int here, boolean[] visited) {
+    public static void dfs(int here) {
 
         System.out.println("노드 " + printNodeName(here) + " 방문");
         visited[here] = true;
@@ -42,16 +48,13 @@ public class Main {
             int there = adj[here][i];
             if (there > -1 && !visited[there]) {
                 System.out.println("노드 " + printNodeName(there) + " 로 이동");
-                dfs(there, visited);
+                dfs(there);
             }
         }
     }
 
     public static void main(String[] args) throws IOException {
-
-        boolean[] visited = new boolean[4];
-        Arrays.fill(visited, false);
         System.out.println("탐색 시작");
-        dfs(0, visited);
+        dfs(0);
     }
 }
