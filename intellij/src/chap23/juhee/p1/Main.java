@@ -20,22 +20,12 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         int testCase = Integer.parseInt(br.readLine().trim()); // 테스트 케이스 갯수
-//        ArrayList<Integer> total;
-//        ArrayList<Integer> val1;
-//        ArrayList<Integer> val2;
 
         for (int s = 0; s < testCase; s++) {
             PriorityQueue<Max> maxHeap = new PriorityQueue<Max>();
             PriorityQueue<Min> minHeap = new PriorityQueue<Min>();
 
-//            total = new ArrayList<Integer>();
-//            val1 = new ArrayList<Integer>();
-//            val2 = new ArrayList<Integer>();
-
             StringTokenizer st = new StringTokenizer(br.readLine());
-//            total.add(Integer.parseInt(st.nextToken()));
-//            val1.add(Integer.parseInt(st.nextToken())); // 32라는 숫자가 val1에 대입된다.
-//            val2.add(Integer.parseInt(st.nextToken()));
 
             int total = Integer.parseInt(st.nextToken());
             int a = Integer.parseInt(st.nextToken());
