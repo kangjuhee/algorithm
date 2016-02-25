@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
-
+// test..
 /**
  * 1.자료형 int->long  범위를 잘 고려해서 작성할 것
  * 2. priorityQueue library
