@@ -40,14 +40,15 @@ public class Main {
     }
 
     public static void dfs(int here) {
+        System.out.println("dfs() 호출");
 
-        System.out.println("노드 " + printNodeName(here) + " 방문");
         visited[here] = true;
 
         for (int i = 0; i < adj[here].length; i++) {
+            System.out.println("i : " + i);
             int there = adj[here][i];
             if (there > -1 && !visited[there]) {
-                System.out.println("노드 " + printNodeName(there) + " 로 이동");
+                System.out.println("노드 " + printNodeName(here) + " 에서 노드 " + printNodeName(there) + " 로 이동");
                 dfs(there);
             }
         }
