@@ -1,4 +1,8 @@
-4
+3
+3
+ba
+aa
+ab
 5
 gg
 kia
@@ -12,16 +16,3 @@ is
 ordered
 ordinary
 this
-6
-ab
-az
-cf
-dh
-yb
-yw
-5
-ea
-db
-cc
-bd
-be
